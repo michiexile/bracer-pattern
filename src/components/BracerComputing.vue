@@ -27,33 +27,30 @@ export default {
     }
   },
   computed: {
-    RC() {
-      return this.arm / (2 * Math.PI);
-    }, // Base diameter
-    RD() {
-      return this.wrist / (2 * Math.PI);
-    }, // Top diameter
-    DeltaR() {
-      return this.RC - this.RD;
-    }, // Difference between the radii
-    alpha() {
-      return Math.asin(this.DeltaR / this.length);
-    }, // Cone tip angle
-    H2() {
-      return this.length ** 2 - this.DeltaR ** 2;
-    }, // Square of height H
-    H() {
-      return Math.sqrt(this.H2);
-    }, // Height
-    R2() {
-      return this.RC / Math.sin(this.alpha);
-    }, // Outer sheet radius
-    R1() {
-      return this.R2 - this.length;
-    }, // Inner sheet radius
+    basediameter() {
+      return this.arm / Math.PI;
+    },
+    topdiameter() {
+      return this.wrist / Math.PI;
+    },
+    deltadiameter() {
+      return this.basediameter - this.topdiameter;
+    },
+    scaling() {
+      return this.basediameter / (this.deltadiameter);
+    },
+    coneside() {
+      return this.length * this.scaling;
+    },
     theta() {
-      return this.arm / this.R2;
-    }, // Cone cut angle
+      return this.arm / this.coneside;
+    },
+    R2() {
+      return this.coneside;
+    },
+    R1() {
+      return this.coneside - this.length;
+    },
     thetaR() {
       return -Math.PI / 2 - this.theta / 2;
     }, // Right ray (90º-theta)
