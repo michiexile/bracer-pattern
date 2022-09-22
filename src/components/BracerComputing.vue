@@ -1,15 +1,17 @@
 <template>
   <div id="controls">
-    <label for="wrist">Wrist Circumference:</label>
+    <label for="wrist">Wrist Circumference ({{ this.metric ? "cm" : "in" }}):</label>
     <input type="number" v-model="wrist" name="wrist" placeholder="Wrist Circumference">
-    <label for="arm">Arm Circumference:</label>
+    <label for="arm">Arm Circumference ({{ this.metric ? "cm" : "in" }}):</label>
     <input type="number" v-model="arm" name="wrist" placeholder="Arm Circumference">
-    <label for="length">Bracer Length:</label>
+    <label for="length">Bracer Length ({{ this.metric ? "cm" : "in" }}):</label>
     <input type="number" v-model="length" name="length" placeholder="Bracer Length">
     <label for="wrap">Coverage (%):</label>
     <input type="number" v-model="wrap" name="wrap" placeholder="Bracer Coverage (%)">
+    <label for="metric">Metric</label>
+    <input type="checkbox" v-model="metric" name="metric">
   </div>
-  <BracerRender :R1="R1" :R2="R2" :fullpath="fullpath" :bracerpath="bracerpath" :viewBox="viewBox"/>
+  <BracerRender :R1="R1" :R2="R2" :fullpath="fullpath" :bracerpath="bracerpath" :viewBox="viewBox" :SVGhw="SVGhw"/>
 </template>
 
 <script>
@@ -23,7 +25,17 @@ export default {
       wrist: 7.5,
       arm: 11.5,
       length: 12,
-      wrap: 75
+      wrap: 75,
+      metric: false
+    }
+  },
+  watch: {
+    metric(oldM, newM) {
+      oldM;
+      var conversion = newM ? 1 / 2.54 : 2.54;
+      this.wrist = this.wrist * conversion;
+      this.arm = this.arm * conversion;
+      this.length = this.length * conversion;
     }
   },
   computed: {
@@ -163,6 +175,9 @@ export default {
     },
     viewBox() {
       return `${this.xMin - 0.2 * this.xRange} ${this.yMin - 0.2 * this.yRange} ${1.4 * this.xRange} ${1.4 * this.yRange}`;
+    },
+    SVGhw() {
+      return this.metric ? "50cm" : "30in";
     },
   }
 }

@@ -55,7 +55,7 @@ export default {
   max-width: 600px;
 }
 
-svg {
+img#svg {
   grid-area: 1 / 2 / 3 / 3;
   width: 100%;
 }
