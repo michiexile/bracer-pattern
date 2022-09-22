@@ -1,0 +1,21 @@
+<svg version="1.1" width="500" height="500"
+     viewBox="-50 -50 100 100"
+     xmlns="http://www.w3.org/2000/svg">
+    <circle id="outer" style="stroke: lightblue; fill: none; stroke-width: 0.1;" cx="0" cy="0" r="25"/>
+    <circle id="inner" style="stroke: lightblue; fill: none; stroke-width: 0.1;" cx="0" cy="0" r="35"/>
+    <path id="fullpath" style="stroke: darkgoldenrod; fill: none; stroke-width: 0.2;" d=""/>
+    <path id="bracerpath" style="stroke: black; fill: none; stroke-width: 0.3;" d=""/>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        var viewBox = urlParams.get("viewBox"),
+        R1 = urlParams.get("R1"),
+        R2 = urlParams.get("R2"),
+        fullpath = urlParams.get("fullpath"),
+        bracerpath = urlParams.get("bracerpath");
+        document.getElementsByTagName("svg").item(0).setAttribute("viewBox", viewBox);
+        document.getElementById("outer").setAttribute("r", R2);
+        document.getElementById("inner").setAttribute("r", R1);
+        document.getElementById("fullpath").setAttribute("d", fullpath);
+        document.getElementById("bracerpath").setAttribute("d", bracerpath);
+    </script>
+</svg>
